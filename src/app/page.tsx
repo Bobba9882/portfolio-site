@@ -1,13 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import { Screen } from "@/components/layout/Screen";
 import { Window } from "@/components/ui/Window";
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="fixed inset-0 flex flex-col items-center justify-center gap-4 bg-[#1d5f7a] bg-[url(/sign-on-bg.jpg)] bg-cover bg-center">
+    <Screen
+      backgroundImage="/sign-on-bg.jpg"
+      className="flex flex-col items-center justify-center gap-4"
+    >
       <button onClick={() => setIsOpen(true)}>Click me bro</button>
 
       {isOpen && (
@@ -16,6 +20,6 @@ export default function Home() {
           <p className="mt-2 text-[10px] italic text-gray-500 underline">Source: trust me bro</p>
         </Window>
       )}
-    </div>
+    </Screen>
   );
 }
