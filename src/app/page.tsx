@@ -7,7 +7,7 @@ export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-[#1d5f7a] bg-[url(/sign-on-bg.jpg)] bg-cover bg-center">
+    <div className="fixed inset-0 flex flex-col items-center justify-center gap-4 bg-[#1d5f7a] bg-[url(/sign-on-bg.jpg)] bg-cover bg-center">
       <button onClick={() => setIsOpen(true)}>Click me bro</button>
 
       {isOpen && (
