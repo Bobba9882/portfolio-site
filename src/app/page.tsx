@@ -84,8 +84,7 @@ export default function Home() {
       )}
 
       <p className="fixed right-2 bottom-2 text-xs text-white [text-shadow:0_1px_4px_#000c]">
-        Not affiliated with or endorsed by Microsoft. Windows is a trademark of the Microsoft group of
-        companies.
+        Not affiliated with or endorsed by Microsoft.
       </p>
     </Screen>
   );
