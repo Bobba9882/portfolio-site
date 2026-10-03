@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     default: SITE_NAME,
     template: `%s | ${SITE_NAME}`,
   },
-  description: "Jesse's portfolio",
+  description: "Place to be",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

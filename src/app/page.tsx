@@ -73,7 +73,7 @@ export default function Home() {
 
       {isOpen && (
         <Window title="Information" onClose={() => setIsOpen(false)} className="w-64">
-          <h2 className="instruction-primary">Welcome to my portfolio!</h2>
+          <h2 className="instruction-primary">Welcome to my page!</h2>
           <p className="mt-2">
             Don't worry, this page isn't actually guarded by a password. Just press the arrow to
             continue!
