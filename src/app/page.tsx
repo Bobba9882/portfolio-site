@@ -1,12 +1,33 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Screen } from "@/components/layout/Screen";
 import { Window } from "@/components/ui/Window";
 import Image from "next/image";
 
+const WELCOME_DURATION_MS = 1200;
+
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isSigningIn, setIsSigningIn] = useState(false);
+  const router = useRouter();
+
+  function signIn(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setIsSigningIn(true);
+    router.prefetch("/desktop");
+    setTimeout(() => router.push("/desktop"), WELCOME_DURATION_MS);
+  }
+
+  if (isSigningIn) {
+    return (
+      <Screen backgroundImage="/sign-on-bg.webp" className="flex items-center justify-center gap-3">
+        <span className="loader animate size-8 translate-y-0.5" />
+        <h1 className="text-3xl leading-none text-white [text-shadow:0_1px_6px_#000c]">Welcome</h1>
+      </Screen>
+    );
+  }
 
   return (
     <Screen
@@ -27,7 +48,7 @@ export default function Home() {
 
       <h1 className="mt-4 text-2xl text-white [text-shadow:0_1px_6px_#000c]">Jesse</h1>
 
-      <form action="/desktop" className="mt-3 grid grid-cols-[1fr_auto_1fr] items-center gap-1.5">
+      <form action="/desktop" onSubmit={signIn} className="mt-3 grid grid-cols-[1fr_auto_1fr] items-center gap-1.5">
         <input
           type="password"
           placeholder="Password"
@@ -57,7 +78,7 @@ export default function Home() {
             Don't worry, this page isn't actually guarded by a password. Just press the arrow to
             continue!
           </p>
-          <p className="mt-2">Inside you'll find find some experiments i am working on.</p>
+          <p className="mt-2">Inside, you'll find some experiments I'm working on.</p>
           <p className="mt-3 text-[10px] italic text-gray-500 underline">This site is a MAJOR work in progress.</p>
         </Window>
       )}
