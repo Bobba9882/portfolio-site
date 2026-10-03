@@ -3,10 +3,10 @@ import { Noto_Sans } from "next/font/google";
 import { SITE_NAME, SITE_URL } from "@/constants";
 import "./globals.css";
 
-// Segoe UI is the Windows 7 font; Noto Sans stands in on systems without it
 const notoSans = Noto_Sans({
   variable: "--font-noto-sans",
   subsets: ["latin"],
+  preload: false,
 });
 
 export const metadata: Metadata = {

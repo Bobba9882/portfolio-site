@@ -27,13 +27,7 @@ export default function Home() {
 
       <h1 className="mt-4 text-2xl text-white [text-shadow:0_1px_6px_#000c]">Jesse</h1>
 
-      <form
-        className="mt-3 grid grid-cols-[1fr_auto_1fr] items-center gap-1.5"
-        onSubmit={(event) => {
-          event.preventDefault();
-          setIsOpen(true);
-        }}
-      >
+      <form action="/desktop" className="mt-3 grid grid-cols-[1fr_auto_1fr] items-center gap-1.5">
         <input
           type="password"
           placeholder="Password"
