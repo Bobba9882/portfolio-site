@@ -9,6 +9,69 @@
   --font-sans: "Segoe UI", var(--font-noto-sans), sans-serif;
 }
 
+/* Windows 7 logon screen */
+@layer utilities {
+  .user-tile {
+    padding: 10px;
+    border: 1px solid #fff9;
+    border-radius: 8px;
+    background: linear-gradient(#fffc, #fff6 50%, #fff3);
+    box-shadow: 0 1px 6px #0006, inset 0 0 0 1px #fffa;
+    backdrop-filter: blur(4px);
+  }
+
+  /* Glass borrowed from 7.css's title-bar buttons (minimize/maximize/close),
+     minus the minimum size and hover/press overlays 7.css puts on every button */
+  .sign-in-button,
+  .glass-button {
+    min-width: 0;
+    min-height: 0;
+    border: 1px solid var(--w7-wct-bd);
+    box-shadow: var(--w7-wct-sd);
+
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+
+  /* Glossy bubble: white highlight on top, cyan glow at the bottom, over a blue fade */
+  .sign-in-button {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border-radius: 50%;
+    background:
+      radial-gradient(ellipse 70% 45% at 50% 5%, #fffe, #fff0),
+      radial-gradient(circle at 50% 110%, #9ff, transparent 60%),
+      linear-gradient(#4aa8e8, #176fb8);
+
+    &:hover {
+      filter: brightness(1.1);
+    }
+
+    &:active {
+      filter: brightness(0.85);
+    }
+  }
+
+  .glass-button {
+    padding: 4px 20px;
+    border-radius: var(--w7-wct-bdr);
+    /* Blue-tinted glass with a soft highlight on the top half */
+    background: linear-gradient(#fff5, #fff1 50%, transparent 55%), #3c8fd680;
+    border-color: #1a4d80cc;
+    color: white;
+    text-shadow: 0 1px 2px #0008;
+
+    &:hover {
+      filter: brightness(1.1);
+    }
+  }
+}
+
 @layer base {
   body {
     font: var(--w7-font);
