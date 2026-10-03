@@ -82,6 +82,11 @@ export default function Home() {
           <p className="mt-3 text-[10px] italic text-gray-500 underline">This site is a MAJOR work in progress.</p>
         </Window>
       )}
+
+      <p className="fixed right-2 bottom-2 text-xs text-white [text-shadow:0_1px_4px_#000c]">
+        Not affiliated with or endorsed by Microsoft. Windows is a trademark of the Microsoft group of
+        companies.
+      </p>
     </Screen>
   );
 }
