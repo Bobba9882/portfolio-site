@@ -25,7 +25,7 @@ export function Window({
   return (
     <div
       ref={draggableRef}
-      className={cn("window glass active fixed flex flex-col", className)}
+      className={cn("window glass active fixed flex max-h-[calc(100dvh-2.75rem)] max-w-[calc(100vw-1rem)] flex-col", className)}
       style={{ ...positionStyle, ...size }}
     >
       <div className="title-bar touch-none select-none" {...dragHandleProps}>
