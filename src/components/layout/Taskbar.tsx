@@ -18,7 +18,7 @@ export function Taskbar() {
     const date = useSyncExternalStore(subscribeToClock, getDate, getServerText);
 
     return (
-        <footer className="taskbar fixed inset-x-0 bottom-0 flex h-[calc(2.75rem+env(safe-area-inset-bottom))] items-center px-1 pb-[env(safe-area-inset-bottom)]">
+        <footer className="taskbar fixed inset-x-0 bottom-0 flex h-11 items-center px-1">
             <button className="start-orb">
                 <Image src={startIcon} alt="Start" className="size-6" />
             </button>

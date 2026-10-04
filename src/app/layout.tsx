@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import { Noto_Sans } from "next/font/google";
 import { SITE_NAME, SITE_URL } from "@/constants";
 import "./globals.css";
@@ -8,10 +8,6 @@ const notoSans = Noto_Sans({
   subsets: ["latin"],
   preload: false,
 });
-
-export const viewport: Viewport = {
-  viewportFit: "cover",
-};
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -24,7 +20,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${notoSans.variable} h-full`}>
+    <html lang="en" className={`${notoSans.variable} h-full bg-[#1d5f7a]`}>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

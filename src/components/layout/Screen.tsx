@@ -12,7 +12,7 @@ export function Screen({ backgroundImage, children, className }: ScreenProps) {
 
   return (
     <div
-      className={cn("fixed inset-0 bg-[#1d5f7a] bg-cover bg-center", className)}
+      className={cn("fixed inset-0 bg-cover bg-center", className)}
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       {children}
