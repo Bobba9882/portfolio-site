@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Noto_Sans } from "next/font/google";
 import { SITE_NAME, SITE_URL } from "@/constants";
 import "./globals.css";
@@ -8,6 +8,10 @@ const notoSans = Noto_Sans({
   subsets: ["latin"],
   preload: false,
 });
+
+export const viewport: Viewport = {
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
