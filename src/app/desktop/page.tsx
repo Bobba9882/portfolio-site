@@ -1,3 +1,11 @@
+import {Screen} from "@/components/layout/Screen";
+import {Taskbar} from "@/components/layout/Taskbar";
+
 export default function Desktop() {
-  return <main className="flex flex-1 items-center justify-center">Nothing to see here yet</main>;
+  return <Screen backgroundImage="/home-bg.webp">
+    <div>
+      PAGE
+    </div>
+    <Taskbar/>
+  </Screen>;
 }
