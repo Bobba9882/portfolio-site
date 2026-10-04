@@ -8,6 +8,7 @@ type WindowProps = {
   children: React.ReactNode;
   onClose?: () => void;
   initialPosition?: Position;
+  size?: { width: number; height: number };
   className?: string;
 };
 
@@ -16,6 +17,7 @@ export function Window({
   children,
   onClose,
   initialPosition,
+  size,
   className,
 }: WindowProps) {
   const { positionStyle, draggableRef, dragHandleProps } = useDraggable(initialPosition);
@@ -23,8 +25,8 @@ export function Window({
   return (
     <div
       ref={draggableRef}
-      className={cn("window glass active fixed", className)}
-      style={positionStyle}
+      className={cn("window glass active fixed flex flex-col", className)}
+      style={{ ...positionStyle, ...size }}
     >
       <div className="title-bar touch-none select-none" {...dragHandleProps}>
         <div className="title-bar-text">{title}</div>
@@ -36,7 +38,7 @@ export function Window({
         )}
       </div>
 
-      <div className="window-body has-space">{children}</div>
+      <div className="window-body has-space flex-1">{children}</div>
     </div>
   );
 }
