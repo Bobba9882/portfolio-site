@@ -2,7 +2,7 @@ import {
     ALIGMENT_FACTOR,
     COHESION_FACTOR,
     MAX_SPEED,
-    MIN_SPEED,
+    MIN_SPEED, PROTECTED_RANGE, REPEL_FACTOR,
     VISIBLE_RANGE,
     WINDOW_SIZE
 } from "@/components/apps/boids/BoidsContent";
@@ -73,6 +73,27 @@ export class Boid {
     }
 
     separation(boids: Boid[]) {
+        let averagePositionX = 0;
+        let averagePositionY = 0;
+        let neighborCount = 0;
+
+        boids.forEach(otherBoid => {
+            if (otherBoid === this){
+                return;
+            }
+
+            const distance = this.getDistanceFromBoid(otherBoid);
+            if (distance < PROTECTED_RANGE) {
+                averagePositionX += this.positionX - otherBoid.positionX;
+                averagePositionY += this.positionY - otherBoid.positionY;
+                neighborCount++
+            }
+        })
+
+        if (neighborCount > 0) {
+            this.velocityX += averagePositionX * REPEL_FACTOR;
+            this.velocityY += averagePositionY * REPEL_FACTOR;
+        }
 
     }
 

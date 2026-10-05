@@ -6,14 +6,14 @@ import { Boid } from "./classes/Boid";
 //CONSTANTS
 export const WINDOW_SIZE = { width: 720, height: 540 };
 export const MIN_SPEED= 2;
-export const MAX_SPEED= 4;
-export const VISIBLE_RANGE= 60;
-export const PROTECTED_RANGE = 12;
+export const MAX_SPEED= 3;
+export const VISIBLE_RANGE= 40;
+export const PROTECTED_RANGE = 8;
 export const REPEL_FACTOR = 0.05;
 export const ALIGMENT_FACTOR = 0.05;
 export const COHESION_FACTOR = 0.02;
 
-const BOIDS_AMOUNT = 100;
+const BOIDS_AMOUNT = 350;
 
 
 export function BoidsContent() {
@@ -40,6 +40,7 @@ export function BoidsContent() {
 
       boids.forEach(boid => {
         boid.draw(context);
+        boid.separation(boids);
         boid.alignment(boids);
         boid.cohesion(boids);
         boid.teleportToOtherSide();
