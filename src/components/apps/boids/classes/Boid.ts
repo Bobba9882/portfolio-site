@@ -1,6 +1,7 @@
-import {WINDOW_SIZE} from "@/components/apps/boids/BoidsContent";
+import {MAX_SPEED, MIN_SPEED, WINDOW_SIZE} from "@/components/apps/boids/BoidsContent";
 
 export class Boid {
+
     private x: number;
     private y: number;
     private vx: number;
@@ -45,15 +46,34 @@ export class Boid {
         }
     }
 
-    seperation() {
+    getDistanceFromBoid(otherBoid: Boid): number {
+        const dx = this.x - otherBoid.x;
+        const dy = this.y - otherBoid.y;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    normalizeSpeed() {
+        const { vx, vy } = this;
+        const speed = Math.sqrt(vx * vx + vy * vy);
+        if (speed > MAX_SPEED) {
+            this.vx = (vx / speed) * MAX_SPEED;
+            this.vy = (vy / speed) * MAX_SPEED;
+        }
+        if (speed < MIN_SPEED) {
+            this.vx = (vx / speed) * MIN_SPEED;
+            this.vy = (vy / speed) * MIN_SPEED;
+        }
+    }
+
+    seperation(boids:Boid[]) {
 
     }
 
-    alignment() {
+    alignment(boids:Boid[]) {
 
     }
 
-    cohesion(){
+    cohesion(boids:Boid[]){
 
     }
 }
