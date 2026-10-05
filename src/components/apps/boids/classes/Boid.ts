@@ -1,3 +1,5 @@
+import {WINDOW_SIZE} from "@/components/apps/boids/BoidsContent";
+
 export class Boid {
     private x: number;
     private y: number;
@@ -29,6 +31,18 @@ export class Boid {
     update(){
         this.x += this.vx;
         this.y += this.vy;
+    }
+
+    teleportToOtherSide() {
+        if (this.x > WINDOW_SIZE.width) {
+            this.x = 0;
+        } else if (this.x < 0) {
+            this.x = WINDOW_SIZE.width;
+        } else if (this.y < 0) {
+            this.y = WINDOW_SIZE.height;
+        } else if (this.y > WINDOW_SIZE.height) {
+            this.y = 0;
+        }
     }
 
     seperation() {

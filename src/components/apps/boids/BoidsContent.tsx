@@ -32,6 +32,7 @@ export function BoidsContent() {
 
       boids.forEach(boid => {
         boid.draw(context);
+        boid.teleportToOtherSide();
         boid.update();
       })
 
