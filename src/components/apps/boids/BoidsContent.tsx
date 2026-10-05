@@ -5,14 +5,13 @@ import { Boid } from "./classes/Boid";
 
 //CONSTANTS
 export const WINDOW_SIZE = { width: 720, height: 540 };
-export const TURN_FACTOR= 0.15;
-export const MIN_SPEED= 0;
-export const MAX_SPEED= 0.5;
-export const VISIBLE_RANGE= 70;
-export const PROTECTED_RANGE = 20;
-export const REPEL_FACTOR = 0.15;
-export const ALIGMENT_FACTOR = 0.005;
-export const COHESION_FACTOR = 0.0005;
+export const MIN_SPEED= 2;
+export const MAX_SPEED= 4;
+export const VISIBLE_RANGE= 60;
+export const PROTECTED_RANGE = 12;
+export const REPEL_FACTOR = 0.05;
+export const ALIGMENT_FACTOR = 0.05;
+export const COHESION_FACTOR = 0.02;
 
 const BOIDS_AMOUNT = 100;
 
@@ -41,6 +40,8 @@ export function BoidsContent() {
 
       boids.forEach(boid => {
         boid.draw(context);
+        boid.alignment(boids);
+        boid.cohesion(boids);
         boid.teleportToOtherSide();
         boid.normalizeSpeed();
         boid.update();
