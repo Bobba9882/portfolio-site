@@ -38,7 +38,7 @@ export function Window({
         )}
       </div>
 
-      <div className="window-body has-space flex-1">{children}</div>
+      <div className="window-body has-space flex min-h-0 flex-1 overflow-hidden">{children}</div>
     </div>
   );
 }
