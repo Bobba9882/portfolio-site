@@ -1,7 +1,7 @@
 import {
     ALIGMENT_FACTOR,
     COHESION_FACTOR,
-    EDGE_MARGIN,
+    EDGE_MARGIN, JITTER_STRENGTH,
     MAX_SPEED,
     MIN_SPEED, PROTECTED_RANGE_SQUARED, REPEL_FACTOR,
     TURN_FACTOR,
@@ -164,5 +164,10 @@ export class Boid {
                 this.velocityY += directionY * COHESION_FACTOR;
             }
         }
+    }
+
+    randomJitter(){
+        this.velocityX += (Math.random() - 0.5) * JITTER_STRENGTH;
+        this.velocityY += (Math.random() - 0.5) * JITTER_STRENGTH;
     }
 }

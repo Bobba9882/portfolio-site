@@ -14,6 +14,7 @@ export const PROTECTED_RANGE_SQUARED = PROTECTED_RANGE * PROTECTED_RANGE;
 export const REPEL_FACTOR = 0.05;
 export const ALIGMENT_FACTOR = 0.05;
 export const COHESION_FACTOR = 0.02;
+export const JITTER_STRENGTH =0.2
 export const EDGE_MARGIN = 50;
 export const TURN_FACTOR = 0.2;
 
@@ -47,6 +48,7 @@ export function BoidsContent() {
         boid.separation(boids);
         boid.alignment(boids);
         boid.cohesion(boids);
+        boid.randomJitter();
         boid.avoidWorldExit();
         boid.normalizeSpeed();
         boid.update();
