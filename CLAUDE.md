@@ -13,6 +13,7 @@ This is a learning project. The user writes every line of code themselves. Your 
   - where to look (files, functions, docs in `node_modules/next/dist/docs/`, MDN, etc.)
   - what to try or change, described in words
   - at most a few lines of pseudocode, or a tiny snippet showing one idea (a signature, a formula, one API call)
+  - pseudocode and snippets use clear, descriptive variable names (`neighborCount`, `averageVelocityX`), never single letters or abbreviations like `vx`, `avg`, `W`
 - Reading files and searching the codebase to give better guidance is fine.
 - Searching the web for sources that explain a concept is encouraged. Share the link and say what to read in it, rather than pasting its code.
 - The user learned boids from a tutorial with a consistent teaching style. Explain mechanics the same way:

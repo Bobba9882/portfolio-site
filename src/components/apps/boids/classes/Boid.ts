@@ -3,9 +3,9 @@ import {
     COHESION_FACTOR,
     EDGE_MARGIN,
     MAX_SPEED,
-    MIN_SPEED, PROTECTED_RANGE, REPEL_FACTOR,
+    MIN_SPEED, PROTECTED_RANGE_SQUARED, REPEL_FACTOR,
     TURN_FACTOR,
-    VISIBLE_RANGE,
+    VISIBLE_RANGE_SQUARED,
     WINDOW_SIZE
 } from "@/components/apps/boids/BoidsContent";
 
@@ -58,10 +58,10 @@ export class Boid {
         }
     }
 
-    getDistanceFromBoid(otherBoid: Boid): number {
+    getSquaredDistanceFromBoid(otherBoid: Boid): number {
         const deltaX = this.positionX - otherBoid.positionX;
         const deltaY = this.positionY - otherBoid.positionY;
-        return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        return deltaX * deltaX + deltaY * deltaY;
     }
 
     normalizeSpeed() {
@@ -87,8 +87,8 @@ export class Boid {
                 return;
             }
 
-            const distance = this.getDistanceFromBoid(otherBoid);
-            if (distance < PROTECTED_RANGE) {
+            const squaredDistance = this.getSquaredDistanceFromBoid(otherBoid);
+            if (squaredDistance < PROTECTED_RANGE_SQUARED) {
                 averagePositionX += this.positionX - otherBoid.positionX;
                 averagePositionY += this.positionY - otherBoid.positionY;
                 neighborCount++
@@ -112,8 +112,8 @@ export class Boid {
                 return;
             }
 
-            const distance = this.getDistanceFromBoid(otherBoid);
-            if (distance < VISIBLE_RANGE) {
+            const squaredDistance = this.getSquaredDistanceFromBoid(otherBoid);
+            if (squaredDistance < VISIBLE_RANGE_SQUARED) {
                 averageVelocityX += otherBoid.velocityX;
                 averageVelocityY += otherBoid.velocityY;
                 neighborCount++;
@@ -139,8 +139,8 @@ export class Boid {
                 return;
             }
 
-            const distance = this.getDistanceFromBoid(otherBoid);
-            if (distance < VISIBLE_RANGE) {
+            const squaredDistance = this.getSquaredDistanceFromBoid(otherBoid);
+            if (squaredDistance < VISIBLE_RANGE_SQUARED) {
                 averagePositionX += otherBoid.positionX;
                 averagePositionY += otherBoid.positionY;
                 neighborCount++;
