@@ -19,7 +19,22 @@ export function BoidsContent() {
       Math.random() * 2 - 1,
     ));
 
-    boids.forEach((boid) => boid.draw(context));
+    let frameId = 0;
+
+    const animationLoop = () => {
+      context.clearRect(0, 0, boidsSize.width, boidsSize.height);
+
+      boids.forEach(boid => {
+        boid.draw(context);
+        boid.update();
+      })
+
+      frameId = requestAnimationFrame(animationLoop);
+    }
+
+    frameId = requestAnimationFrame(animationLoop);
+
+    return () => cancelAnimationFrame(frameId);
   }, []);
 
 
