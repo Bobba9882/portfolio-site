@@ -12,6 +12,8 @@ export const PROTECTED_RANGE = 8;
 export const REPEL_FACTOR = 0.05;
 export const ALIGMENT_FACTOR = 0.05;
 export const COHESION_FACTOR = 0.02;
+export const EDGE_MARGIN = 50;
+export const TURN_FACTOR = 0.2;
 
 const BOIDS_AMOUNT = 350;
 
@@ -43,7 +45,7 @@ export function BoidsContent() {
         boid.separation(boids);
         boid.alignment(boids);
         boid.cohesion(boids);
-        boid.teleportToOtherSide();
+        boid.avoidWorldExit();
         boid.normalizeSpeed();
         boid.update();
       })

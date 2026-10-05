@@ -1,8 +1,10 @@
 import {
     ALIGMENT_FACTOR,
     COHESION_FACTOR,
+    EDGE_MARGIN,
     MAX_SPEED,
     MIN_SPEED, PROTECTED_RANGE, REPEL_FACTOR,
+    TURN_FACTOR,
     VISIBLE_RANGE,
     WINDOW_SIZE
 } from "@/components/apps/boids/BoidsContent";
@@ -41,15 +43,18 @@ export class Boid {
         this.positionY += this.velocityY;
     }
 
-    teleportToOtherSide() {
-        if (this.positionX > WINDOW_SIZE.width) {
-            this.positionX = 0;
-        } else if (this.positionX < 0) {
-            this.positionX = WINDOW_SIZE.width;
-        } else if (this.positionY < 0) {
-            this.positionY = WINDOW_SIZE.height;
-        } else if (this.positionY > WINDOW_SIZE.height) {
-            this.positionY = 0;
+    avoidWorldExit() {
+        if (this.positionX > WINDOW_SIZE.width - EDGE_MARGIN) {
+            this.velocityX -= TURN_FACTOR;
+        }
+        if (this.positionX < EDGE_MARGIN) {
+            this.velocityX += TURN_FACTOR;
+        }
+        if (this.positionY > WINDOW_SIZE.height - EDGE_MARGIN) {
+            this.velocityY -= TURN_FACTOR;
+        }
+        if (this.positionY < EDGE_MARGIN) {
+            this.velocityY += TURN_FACTOR;
         }
     }
 
