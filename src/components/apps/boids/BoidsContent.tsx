@@ -63,5 +63,11 @@ export function BoidsContent() {
   }, []);
 
 
-  return <canvas ref={canvasRef} className="min-h-0 w-full" width={WINDOW_SIZE.width} height={WINDOW_SIZE.height} />;
+  return <div className="flex flex-col min-h-0 w-full">
+    <canvas ref={canvasRef} className="min-h-0 w-full" width={WINDOW_SIZE.width} height={WINDOW_SIZE.height} />
+    <fieldset className="shrink-0">
+      <legend>Configuration</legend>
+      <p>SOON!!!</p>
+    </fieldset>
+  </div>
 }

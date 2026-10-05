@@ -8,7 +8,7 @@ type WindowProps = {
   children: React.ReactNode;
   onClose?: () => void;
   initialPosition?: Position;
-  size?: { width: number; height: number };
+  size?: { width: number; height?: number };
   className?: string;
 };
 

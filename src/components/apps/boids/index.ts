@@ -6,6 +6,6 @@ export const boidsApp: DesktopApp = {
   id: "boids",
   name: "Boids",
   icon,
-  size: WINDOW_SIZE,
+  size: { width: WINDOW_SIZE.width },
   Content: BoidsContent,
 };
