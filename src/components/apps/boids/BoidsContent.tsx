@@ -3,7 +3,10 @@
 import { useEffect, useRef } from "react";
 import { Boid } from "./classes/Boid";
 
-export const boidsSize = { width: 720, height: 540 };
+//CONSTANTS
+export const WINDOW_SIZE = { width: 720, height: 540 };
+const BOIDS_AMOUNT = 100;
+
 
 export function BoidsContent() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -12,17 +15,20 @@ export function BoidsContent() {
     const context = canvasRef.current?.getContext("2d");
     if (!context) return;
 
-    const boids = Array.from({ length: 50 }, () => new Boid(
-      Math.random() * boidsSize.width,
-      Math.random() * boidsSize.height,
-      Math.random() * 2 - 1,
-      Math.random() * 2 - 1,
-    ));
+    const boids = Array.from({ length: BOIDS_AMOUNT }, () => {
+
+      const boidX = Math.random() * WINDOW_SIZE.width;
+      const boidY = Math.random() * WINDOW_SIZE.height;
+      const boidVX = (Math.random() - 0.5) * 2;
+      const boidVY = (Math.random() - 0.5) * 2;
+
+      return new Boid(boidX, boidY, boidVX, boidVY);
+    });
 
     let frameId = 0;
 
     const animationLoop = () => {
-      context.clearRect(0, 0, boidsSize.width, boidsSize.height);
+      context.clearRect(0, 0, WINDOW_SIZE.width, WINDOW_SIZE.height);
 
       boids.forEach(boid => {
         boid.draw(context);
@@ -38,5 +44,5 @@ export function BoidsContent() {
   }, []);
 
 
-  return <canvas ref={canvasRef} className="min-h-0 w-full" width={boidsSize.width} height={boidsSize.height} />;
+  return <canvas ref={canvasRef} className="min-h-0 w-full" width={WINDOW_SIZE.width} height={WINDOW_SIZE.height} />;
 }

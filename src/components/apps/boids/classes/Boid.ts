@@ -10,11 +10,6 @@ export class Boid {
         this.vy = vy;
     }
 
-    update(){
-        this.x += this.vx;
-        this.y += this.vy;
-    }
-
     draw(context: CanvasRenderingContext2D) {
         const angle = Math.atan2(this.vy, this.vx);
 
@@ -29,5 +24,22 @@ export class Boid {
         context.closePath();
         context.fill();
         context.restore();
+    }
+
+    update(){
+        this.x += this.vx;
+        this.y += this.vy;
+    }
+
+    seperation() {
+
+    }
+
+    alignment() {
+
+    }
+
+    cohesion(){
+
     }
 }

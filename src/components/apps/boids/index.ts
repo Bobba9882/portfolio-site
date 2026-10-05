@@ -1,11 +1,11 @@
 import type { DesktopApp } from "@/types";
-import { BoidsContent, boidsSize } from "./BoidsContent";
+import {BoidsContent, WINDOW_SIZE} from "./BoidsContent";
 const icon = "/icons/boids-ico.ico";
 
 export const boidsApp: DesktopApp = {
   id: "boids",
   name: "Boids",
   icon,
-  size: boidsSize,
+  size: WINDOW_SIZE,
   Content: BoidsContent,
 };
