@@ -59,6 +59,7 @@ export default function Home() {
           data-bwignore
           data-form-type="other"
           className="col-start-2 w-56 shadow-md placeholder:text-gray-400"
+          defaultValue="Bobba9882"
         />
         <button type="submit" aria-label="Sign in" className="sign-in-button">
           <svg viewBox="0 0 16 16" className="size-3.5 fill-none stroke-white stroke-[2.5]" aria-hidden>
