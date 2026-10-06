@@ -3,9 +3,8 @@ import {
     COHESION_FACTOR,
     EDGE_MARGIN, JITTER_STRENGTH,
     MAX_SPEED,
-    MIN_SPEED, PROTECTED_RANGE_SQUARED, REPEL_FACTOR,
+    MIN_SPEED, REPEL_FACTOR,
     TURN_FACTOR,
-    VISIBLE_RANGE_SQUARED,
     WINDOW_SIZE
 } from "@/components/apps/boids/BoidsContent";
 
@@ -80,22 +79,13 @@ export class Boid {
     separation(boids: Boid[]) {
         let averagePositionX = 0;
         let averagePositionY = 0;
-        let neighborCount = 0;
 
         boids.forEach(otherBoid => {
-            if (otherBoid === this){
-                return;
-            }
-
-            const squaredDistance = this.getSquaredDistanceFromBoid(otherBoid);
-            if (squaredDistance < PROTECTED_RANGE_SQUARED) {
-                averagePositionX += this.positionX - otherBoid.positionX;
-                averagePositionY += this.positionY - otherBoid.positionY;
-                neighborCount++
-            }
+            averagePositionX += this.positionX - otherBoid.positionX;
+            averagePositionY += this.positionY - otherBoid.positionY;
         })
 
-        if (neighborCount > 0) {
+        if (boids.length > 0) {
             this.velocityX += averagePositionX * REPEL_FACTOR;
             this.velocityY += averagePositionY * REPEL_FACTOR;
         }
@@ -105,51 +95,33 @@ export class Boid {
     alignment(boids: Boid[]) {
         let averageVelocityX = 0;
         let averageVelocityY = 0;
-        let neighborCount = 0;
 
         boids.forEach(otherBoid => {
-            if (otherBoid === this){
-                return;
-            }
-
-            const squaredDistance = this.getSquaredDistanceFromBoid(otherBoid);
-            if (squaredDistance < VISIBLE_RANGE_SQUARED) {
-                averageVelocityX += otherBoid.velocityX;
-                averageVelocityY += otherBoid.velocityY;
-                neighborCount++;
-            }
+            averageVelocityX += otherBoid.velocityX;
+            averageVelocityY += otherBoid.velocityY;
         })
 
-        if (neighborCount > 0){
-            averageVelocityX /= neighborCount;
-            averageVelocityY /= neighborCount;
-        }
+        if (boids.length > 0){
+            averageVelocityX /= boids.length;
+            averageVelocityY /= boids.length;
 
-        this.velocityX += (averageVelocityX - this.velocityX) * ALIGMENT_FACTOR;
-        this.velocityY += (averageVelocityY - this.velocityY) * ALIGMENT_FACTOR;
+            this.velocityX += (averageVelocityX - this.velocityX) * ALIGMENT_FACTOR;
+            this.velocityY += (averageVelocityY - this.velocityY) * ALIGMENT_FACTOR;
+        }
     }
 
     cohesion(boids: Boid[]){
         let averagePositionX = 0;
         let averagePositionY = 0;
-        let neighborCount = 0;
 
         boids.forEach(otherBoid => {
-            if (otherBoid === this){
-                return;
-            }
-
-            const squaredDistance = this.getSquaredDistanceFromBoid(otherBoid);
-            if (squaredDistance < VISIBLE_RANGE_SQUARED) {
-                averagePositionX += otherBoid.positionX;
-                averagePositionY += otherBoid.positionY;
-                neighborCount++;
-            }
+            averagePositionX += otherBoid.positionX;
+            averagePositionY += otherBoid.positionY;
         })
 
-        if (neighborCount > 0){
-            averagePositionX /= neighborCount;
-            averagePositionY /= neighborCount;
+        if (boids.length > 0){
+            averagePositionX /= boids.length;
+            averagePositionY /= boids.length;
 
             let directionX = averagePositionX - this.positionX;
             let directionY = averagePositionY - this.positionY;

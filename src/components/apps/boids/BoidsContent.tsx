@@ -9,8 +9,8 @@ export const MIN_SPEED= 2;
 export const MAX_SPEED= 3;
 export const VISIBLE_RANGE= 40;
 export const PROTECTED_RANGE = 8;
-export const VISIBLE_RANGE_SQUARED = VISIBLE_RANGE * VISIBLE_RANGE;
-export const PROTECTED_RANGE_SQUARED = PROTECTED_RANGE * PROTECTED_RANGE;
+const VISIBLE_RANGE_SQUARED = VISIBLE_RANGE * VISIBLE_RANGE;
+const PROTECTED_RANGE_SQUARED = PROTECTED_RANGE * PROTECTED_RANGE;
 export const REPEL_FACTOR = 0.05;
 export const ALIGMENT_FACTOR = 0.05;
 export const COHESION_FACTOR = 0.02;
@@ -39,20 +39,50 @@ export function BoidsContent() {
     });
 
     let frameId = 0;
+    let totalFrameCostMs = 0;
+    let measuredFrameCount = 0;
 
     const animationLoop = () => {
+      const frameStart = performance.now();
       context.clearRect(0, 0, WINDOW_SIZE.width, WINDOW_SIZE.height);
 
       boids.forEach(boid => {
+
+        const boidsInRange: Boid[] = []
+        const boidsInDangerZone: Boid[] = []
+
+        boids.forEach(otherBoid => {
+          if (otherBoid === boid) {
+            return;
+          }
+
+          const squaredDistance = boid.getSquaredDistanceFromBoid(otherBoid);
+          if (squaredDistance < VISIBLE_RANGE_SQUARED) {
+            if (squaredDistance < PROTECTED_RANGE_SQUARED) {
+              boidsInDangerZone.push(otherBoid);
+            }
+            boidsInRange.push(otherBoid);
+          }
+        });
+
+
         boid.draw(context);
-        boid.separation(boids);
-        boid.alignment(boids);
-        boid.cohesion(boids);
+        boid.separation(boidsInDangerZone);
+        boid.alignment(boidsInRange);
+        boid.cohesion(boidsInRange);
         boid.randomJitter();
         boid.avoidWorldExit();
         boid.normalizeSpeed();
         boid.update();
       })
+
+      totalFrameCostMs += performance.now() - frameStart;
+      measuredFrameCount++;
+      if (measuredFrameCount === 60) {
+        console.log(`average frame cost: ${(totalFrameCostMs / measuredFrameCount).toFixed(2)}ms`);
+        totalFrameCostMs = 0;
+        measuredFrameCount = 0;
+      }
 
       frameId = requestAnimationFrame(animationLoop);
     }
