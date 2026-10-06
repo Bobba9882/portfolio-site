@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Boid } from "./classes/Boid";
+import { Boid, createPointerAtlas } from "./classes/Boid";
 
 //CONSTANTS
 export const WINDOW_SIZE = { width: 720, height: 540 };
@@ -18,7 +18,7 @@ export const JITTER_STRENGTH =0.2
 export const EDGE_MARGIN = 50;
 export const TURN_FACTOR = 0.2;
 
-const BOIDS_AMOUNT = 350;
+const BOIDS_AMOUNT = 400;
 
 
 export function BoidsContent() {
@@ -38,12 +38,11 @@ export function BoidsContent() {
       return new Boid(boidX, boidY, boidVX, boidVY);
     });
 
+    const pointerAtlas = createPointerAtlas();
+
     let frameId = 0;
-    let totalFrameCostMs = 0;
-    let measuredFrameCount = 0;
 
     const animationLoop = () => {
-      const frameStart = performance.now();
       context.clearRect(0, 0, WINDOW_SIZE.width, WINDOW_SIZE.height);
 
       boids.forEach(boid => {
@@ -66,7 +65,7 @@ export function BoidsContent() {
         });
 
 
-        boid.draw(context);
+        boid.draw(context, pointerAtlas);
         boid.separation(boidsInDangerZone);
         boid.alignment(boidsInRange);
         boid.cohesion(boidsInRange);
@@ -75,14 +74,6 @@ export function BoidsContent() {
         boid.normalizeSpeed();
         boid.update();
       })
-
-      totalFrameCostMs += performance.now() - frameStart;
-      measuredFrameCount++;
-      if (measuredFrameCount === 60) {
-        console.log(`average frame cost: ${(totalFrameCostMs / measuredFrameCount).toFixed(2)}ms`);
-        totalFrameCostMs = 0;
-        measuredFrameCount = 0;
-      }
 
       frameId = requestAnimationFrame(animationLoop);
     }

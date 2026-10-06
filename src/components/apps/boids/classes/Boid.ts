@@ -8,6 +8,49 @@ import {
     WINDOW_SIZE
 } from "@/components/apps/boids/BoidsContent";
 
+
+const POINTER_TIP_ANGLE = -Math.PI * 5 / 8;
+const POINTER_ANGLE_STEPS = 64;
+const POINTER_CELL_SIZE = 28;
+export function createPointerAtlas(): HTMLCanvasElement {
+    const atlas = document.createElement("canvas");
+    atlas.width = POINTER_ANGLE_STEPS * POINTER_CELL_SIZE;
+    atlas.height = POINTER_CELL_SIZE;
+
+    const atlasContext = atlas.getContext("2d")!;
+    atlasContext.fillStyle = "white";
+    atlasContext.strokeStyle = "black";
+
+    for (let angleIndex = 0; angleIndex < POINTER_ANGLE_STEPS; angleIndex++) {
+        const heading = (angleIndex / POINTER_ANGLE_STEPS) * 2 * Math.PI;
+
+        atlasContext.save();
+        atlasContext.translate((angleIndex + 0.5) * POINTER_CELL_SIZE, POINTER_CELL_SIZE / 2);
+        atlasContext.rotate(heading - POINTER_TIP_ANGLE);
+        atlasContext.translate(-7, -10.5);
+
+        atlasContext.beginPath();
+        atlasContext.moveTo(1, 1);
+        atlasContext.lineTo(1, 17);
+        atlasContext.lineTo(5, 13);
+        atlasContext.lineTo(8, 19);
+        atlasContext.lineTo(10, 18);
+        atlasContext.lineTo(7, 12);
+        atlasContext.lineTo(12, 12);
+        atlasContext.closePath();
+
+        atlasContext.shadowColor = "rgba(0, 0, 0, 0.35)";
+        atlasContext.shadowOffsetX = 1;
+        atlasContext.shadowOffsetY = 1;
+        atlasContext.fill();
+        atlasContext.shadowColor = "transparent";
+        atlasContext.stroke();
+        atlasContext.restore();
+    }
+
+    return atlas;
+}
+
 export class Boid {
 
     private positionX: number;
@@ -21,20 +64,16 @@ export class Boid {
         this.velocityY = velocityY;
     }
 
-    draw(context: CanvasRenderingContext2D) {
+    draw(context: CanvasRenderingContext2D, pointerAtlas: HTMLCanvasElement) {
         const heading = Math.atan2(this.velocityY, this.velocityX);
+        const angleIndex = (Math.round(heading / (2 * Math.PI) * POINTER_ANGLE_STEPS) + POINTER_ANGLE_STEPS) % POINTER_ANGLE_STEPS;
 
-        context.save();
-        context.translate(this.positionX, this.positionY);
-        context.rotate(heading);
-
-        context.beginPath();
-        context.moveTo(5, 0);
-        context.lineTo(-5, 2.5);
-        context.lineTo(-5, -2.5);
-        context.closePath();
-        context.fill();
-        context.restore();
+        context.drawImage(
+            pointerAtlas,
+            angleIndex * POINTER_CELL_SIZE, 0, POINTER_CELL_SIZE, POINTER_CELL_SIZE,
+            Math.round(this.positionX - POINTER_CELL_SIZE / 2), Math.round(this.positionY - POINTER_CELL_SIZE / 2),
+            POINTER_CELL_SIZE, POINTER_CELL_SIZE
+        );
     }
 
     update(){
