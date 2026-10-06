@@ -1,12 +1,4 @@
-import {
-    ALIGMENT_FACTOR,
-    COHESION_FACTOR,
-    EDGE_MARGIN, JITTER_STRENGTH,
-    MAX_SPEED,
-    MIN_SPEED, REPEL_FACTOR,
-    TURN_FACTOR,
-    WINDOW_SIZE
-} from "@/components/apps/boids/BoidsContent";
+import { WINDOW_SIZE, type BoidSettings } from "@/components/apps/boids/BoidsContent";
 
 
 const POINTER_TIP_ANGLE = -Math.PI * 5 / 8;
@@ -81,18 +73,18 @@ export class Boid {
         this.positionY += this.velocityY;
     }
 
-    avoidWorldExit() {
-        if (this.positionX > WINDOW_SIZE.width - EDGE_MARGIN) {
-            this.velocityX -= TURN_FACTOR;
+    avoidWorldExit(settings: BoidSettings) {
+        if (this.positionX > WINDOW_SIZE.width - settings.edgeMargin) {
+            this.velocityX -= settings.turnFactor;
         }
-        if (this.positionX < EDGE_MARGIN) {
-            this.velocityX += TURN_FACTOR;
+        if (this.positionX < settings.edgeMargin) {
+            this.velocityX += settings.turnFactor;
         }
-        if (this.positionY > WINDOW_SIZE.height - EDGE_MARGIN) {
-            this.velocityY -= TURN_FACTOR;
+        if (this.positionY > WINDOW_SIZE.height - settings.edgeMargin) {
+            this.velocityY -= settings.turnFactor;
         }
-        if (this.positionY < EDGE_MARGIN) {
-            this.velocityY += TURN_FACTOR;
+        if (this.positionY < settings.edgeMargin) {
+            this.velocityY += settings.turnFactor;
         }
     }
 
@@ -102,20 +94,20 @@ export class Boid {
         return deltaX * deltaX + deltaY * deltaY;
     }
 
-    normalizeSpeed() {
+    normalizeSpeed(settings: BoidSettings) {
         const { velocityX, velocityY } = this;
         const speed = Math.sqrt(velocityX * velocityX + velocityY * velocityY);
-        if (speed > MAX_SPEED) {
-            this.velocityX = (velocityX / speed) * MAX_SPEED;
-            this.velocityY = (velocityY / speed) * MAX_SPEED;
+        if (speed > settings.maxSpeed) {
+            this.velocityX = (velocityX / speed) * settings.maxSpeed;
+            this.velocityY = (velocityY / speed) * settings.maxSpeed;
         }
-        if (speed < MIN_SPEED) {
-            this.velocityX = (velocityX / speed) * MIN_SPEED;
-            this.velocityY = (velocityY / speed) * MIN_SPEED;
+        if (speed < settings.minSpeed) {
+            this.velocityX = (velocityX / speed) * settings.minSpeed;
+            this.velocityY = (velocityY / speed) * settings.minSpeed;
         }
     }
 
-    separation(boids: Boid[]) {
+    separation(boids: Boid[], settings: BoidSettings) {
         let averagePositionX = 0;
         let averagePositionY = 0;
 
@@ -125,13 +117,13 @@ export class Boid {
         })
 
         if (boids.length > 0) {
-            this.velocityX += averagePositionX * REPEL_FACTOR;
-            this.velocityY += averagePositionY * REPEL_FACTOR;
+            this.velocityX += averagePositionX * settings.repelFactor;
+            this.velocityY += averagePositionY * settings.repelFactor;
         }
 
     }
 
-    alignment(boids: Boid[]) {
+    alignment(boids: Boid[], settings: BoidSettings) {
         let averageVelocityX = 0;
         let averageVelocityY = 0;
 
@@ -144,12 +136,12 @@ export class Boid {
             averageVelocityX /= boids.length;
             averageVelocityY /= boids.length;
 
-            this.velocityX += (averageVelocityX - this.velocityX) * ALIGMENT_FACTOR;
-            this.velocityY += (averageVelocityY - this.velocityY) * ALIGMENT_FACTOR;
+            this.velocityX += (averageVelocityX - this.velocityX) * settings.alignmentFactor;
+            this.velocityY += (averageVelocityY - this.velocityY) * settings.alignmentFactor;
         }
     }
 
-    cohesion(boids: Boid[]){
+    cohesion(boids: Boid[], settings: BoidSettings){
         let averagePositionX = 0;
         let averagePositionY = 0;
 
@@ -171,14 +163,14 @@ export class Boid {
                 directionX /= distanceToCenter;
                 directionY /= distanceToCenter;
 
-                this.velocityX += directionX * COHESION_FACTOR;
-                this.velocityY += directionY * COHESION_FACTOR;
+                this.velocityX += directionX * settings.cohesionFactor;
+                this.velocityY += directionY * settings.cohesionFactor;
             }
         }
     }
 
-    randomJitter(){
-        this.velocityX += (Math.random() - 0.5) * JITTER_STRENGTH;
-        this.velocityY += (Math.random() - 0.5) * JITTER_STRENGTH;
+    randomJitter(settings: BoidSettings){
+        this.velocityX += (Math.random() - 0.5) * settings.jitterStrength;
+        this.velocityY += (Math.random() - 0.5) * settings.jitterStrength;
     }
 }

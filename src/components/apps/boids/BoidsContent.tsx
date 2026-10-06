@@ -5,24 +5,28 @@ import { Boid, createPointerAtlas } from "./classes/Boid";
 
 //CONSTANTS
 export const WINDOW_SIZE = { width: 720, height: 540 };
-export const MIN_SPEED= 2;
-export const MAX_SPEED= 3;
-export const VISIBLE_RANGE= 40;
-export const PROTECTED_RANGE = 8;
-const VISIBLE_RANGE_SQUARED = VISIBLE_RANGE * VISIBLE_RANGE;
-const PROTECTED_RANGE_SQUARED = PROTECTED_RANGE * PROTECTED_RANGE;
-export const REPEL_FACTOR = 0.05;
-export const ALIGMENT_FACTOR = 0.05;
-export const COHESION_FACTOR = 0.02;
-export const JITTER_STRENGTH =0.2
-export const EDGE_MARGIN = 50;
-export const TURN_FACTOR = 0.2;
 
 const BOIDS_AMOUNT = 400;
+
+const DEFAULT_SETTINGS = {
+  minSpeed: 2,
+  maxSpeed: 3,
+  visibleRange: 40,
+  protectedRange: 8,
+  repelFactor: 0.05,
+  alignmentFactor: 0.05,
+  cohesionFactor: 0.02,
+  jitterStrength: 0.2,
+  edgeMargin: 50,
+  turnFactor: 0.2
+}
+
+export type BoidSettings = typeof DEFAULT_SETTINGS;
 
 
 export function BoidsContent() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const settingsRef = useRef(DEFAULT_SETTINGS);
 
   useEffect(() => {
     const context = canvasRef.current?.getContext("2d");
@@ -45,6 +49,11 @@ export function BoidsContent() {
     const animationLoop = () => {
       context.clearRect(0, 0, WINDOW_SIZE.width, WINDOW_SIZE.height);
 
+      const settings = settingsRef.current;
+      const { visibleRange, protectedRange } = settings;
+      const visibleRangeSquared = visibleRange ** 2;
+      const protectedRangeSquared = protectedRange ** 2;
+
       boids.forEach(boid => {
 
         const boidsInRange: Boid[] = []
@@ -56,8 +65,8 @@ export function BoidsContent() {
           }
 
           const squaredDistance = boid.getSquaredDistanceFromBoid(otherBoid);
-          if (squaredDistance < VISIBLE_RANGE_SQUARED) {
-            if (squaredDistance < PROTECTED_RANGE_SQUARED) {
+          if (squaredDistance < visibleRangeSquared) {
+            if (squaredDistance < protectedRangeSquared) {
               boidsInDangerZone.push(otherBoid);
             }
             boidsInRange.push(otherBoid);
@@ -66,12 +75,12 @@ export function BoidsContent() {
 
 
         boid.draw(context, pointerAtlas);
-        boid.separation(boidsInDangerZone);
-        boid.alignment(boidsInRange);
-        boid.cohesion(boidsInRange);
-        boid.randomJitter();
-        boid.avoidWorldExit();
-        boid.normalizeSpeed();
+        boid.separation(boidsInDangerZone, settings);
+        boid.alignment(boidsInRange, settings);
+        boid.cohesion(boidsInRange, settings);
+        boid.randomJitter(settings);
+        boid.avoidWorldExit(settings);
+        boid.normalizeSpeed(settings);
         boid.update();
       })
 
