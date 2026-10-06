@@ -45,6 +45,7 @@ export function Desktop() {
               event.stopPropagation();
               setSelectedAppId(id);
             }}
+            onPointerUp={(event) => event.pointerType === "touch" && openApp(id)}
             onDoubleClick={() => openApp(id)}
             onKeyDown={(event) => event.key === "Enter" && openApp(id)}
           >
