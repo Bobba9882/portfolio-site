@@ -58,8 +58,8 @@ export function Desktop() {
         ))}
       </div>
 
-      {APPS.filter(({ id }) => openAppIds.includes(id)).map(({ id, name, size, Content }) => (
-        <Window key={id} title={name} size={size} onClose={() => closeApp(id)}>
+      {APPS.filter(({ id }) => openAppIds.includes(id)).map(({ id, name, size, Content, Info }) => (
+        <Window key={id} title={name} size={size} onCloseAction={() => closeApp(id)} help={Info && <Info />}>
           <Content />
         </Window>
       ))}

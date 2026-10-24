@@ -119,7 +119,7 @@ export function BoidsContent() {
 
 
   return <div className="flex flex-col w-full">
-    <canvas ref={canvasRef} className="w-full h-auto"width={WINDOW_SIZE.width} height={WINDOW_SIZE.height} />
+    <canvas ref={canvasRef} className="w-full h-auto" width={WINDOW_SIZE.width} height={WINDOW_SIZE.height} />
     <fieldset className="shrink-0">
       <legend>Configuration</legend>
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-x-3 gap-y-2">

@@ -5,4 +5,5 @@ export type DesktopApp = {
   icon: string;
   size: { width: number; height?: number };
   Content: React.ComponentType;
+  Info?: React.ComponentType;
 };
