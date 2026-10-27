@@ -13,7 +13,7 @@ export default function Home() {
   const [isSigningIn, setIsSigningIn] = useState(false);
   const router = useRouter();
 
-  function signIn(event: React.FormEvent<HTMLFormElement>) {
+  function signIn(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsSigningIn(true);
     router.prefetch("/desktop");

@@ -3,13 +3,14 @@
 import { useState } from "react";
 import Image from "next/image";
 import { boidsApp } from "@/components/apps/boids";
+import { snakeApp } from "@/components/apps/snake";
 import { Window } from "@/components/ui/Window";
 import { DESKTOP_SHORTCUT_SIZE } from "@/constants";
 import { cn } from "@/lib/utils";
 import type { DesktopApp } from "@/types";
 
 // Add an app here to give it a desktop shortcut
-const APPS: DesktopApp[] = [boidsApp];
+const APPS: DesktopApp[] = [boidsApp, snakeApp];
 
 export function Desktop() {
   const [openAppIds, setOpenAppIds] = useState<string[]>([]);
